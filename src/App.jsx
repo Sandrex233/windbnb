@@ -3,12 +3,12 @@ import Navbar from "./components/Navbar";
 import Listings from "./components/Listings";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [selectedCity, setSelectedCity] = useState("");
 
   return (
     <div>
-      <Navbar />
-      <Listings />
+      <Navbar selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
+      <Listings selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
     </div>
   );
 }
