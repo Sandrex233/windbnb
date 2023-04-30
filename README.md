@@ -1,5 +1,4 @@
 <!-- Please update value in the {}  -->
-# Status: work in progress
 
 <h1 align="center">Windbnb</h1>
 
