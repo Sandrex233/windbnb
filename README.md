@@ -1,4 +1,5 @@
 <!-- Please update value in the {}  -->
+# Status: work in progress
 
 <h1 align="center">Windbnb</h1>
 
@@ -8,11 +9,11 @@
 
 <div align="center">
   <h3>
-    <a href="https://{your-demo-link.your-domain}">
+    <a href="https://windbnb-challenge-react.netlify.app/">
       Demo
     </a>
     <span> | </span>
-    <a href="https://{your-url-to-the-solution}">
+    <a href="https://github.com/Sandrex233/windbnb">
       Solution
     </a>
     <span> | </span>
