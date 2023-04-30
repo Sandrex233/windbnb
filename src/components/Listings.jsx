@@ -2,7 +2,7 @@ import React from "react";
 import stays from "../data/stays.json";
 import star from "../assets/red-star.svg";
 
-const Listings = ({ selectedCity }) => {
+const Listings = ({ selectedGuests, selectedCity }) => {
   return (
     <div className="pl-[2rem] pr-[2rem] sm:pl-[3rem] sm:pr-[3rem] lg:px-40 min-h-screen">
       <div className="flex justify-between items-center py-5 ">
@@ -15,6 +15,9 @@ const Listings = ({ selectedCity }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {stays
           .filter((stay) => (selectedCity ? stay.city === selectedCity : true))
+          .filter((stay) =>
+            selectedGuests ? stay.maxGuests == selectedGuests : true
+          )
           .map((stay) => (
             <div key={stay.rating} className="flex flex-col mb-6">
               <div className="mr-4">

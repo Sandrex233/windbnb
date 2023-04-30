@@ -4,11 +4,15 @@ import Listings from "./components/Listings";
 
 function App() {
   const [selectedCity, setSelectedCity] = useState("");
+  const [selectedGuests, setSelectedGuests] = useState(null);
 
   return (
     <div>
-      <Navbar selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
-      <Listings selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
+      <Navbar
+        setSelectedGuests={setSelectedGuests}
+        setSelectedCity={setSelectedCity}
+      />
+      <Listings selectedGuests={selectedGuests} selectedCity={selectedCity} />
     </div>
   );
 }

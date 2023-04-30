@@ -1,26 +1,23 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { AiOutlineSearch } from "react-icons/ai";
 
-const Search = ({ selectedCity, setSelectedCity }) => {
+const Search = ({ setSelectedCity, setSelectedGuests }) => {
   const [open, setOpen] = useState(false);
   const [location, setLocation] = useState("");
   const [guests, setGuests] = useState("");
 
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
+  const handleLocationSelect = (city, country) => {
+    setLocation({ city, country });
   };
 
   const handleGuestsChange = (event) => {
     setGuests(event.target.value);
   };
 
-  const handleCitySelect = (city) => {
-    // setSelectedCity(city);
-    setLocation(city);
-  };
-
-  const handleSearch = (location) => {
-    setSelectedCity(location);
+  const handleSearch = (location, guests) => {
+    setSelectedCity(location.city);
+    setSelectedGuests(guests);
     setOpen(false);
   };
 
@@ -33,16 +30,38 @@ const Search = ({ selectedCity, setSelectedCity }) => {
 
   return (
     <>
-      <button
-        className="bg-white border border-gray-300 rounded-md px-4 py-2 flex items-center justify-center"
-        onClick={() => setOpen(true)}
-      >
-        <span className="text-gray-600 text-sm font-medium">Search</span>
-      </button>
+      <div className="border border-[#FFFFFF] rounded-xl px-4 py-3 flex items-center justify-center shadow-custom text-xs sm:text-sm">
+        <div className="border-r border-gray-300 pr-4 flex-grow">
+          <button onClick={() => setOpen(true)}>
+            {location ? (
+              <>
+                <span>{location.city},</span>
+                <span className="ml-1">{location.country}</span>
+              </>
+            ) : (
+              <span className="text-[#BDBDBD]">Add location</span>
+            )}
+          </button>
+        </div>
+        <div className="border-r border-gray-300 px-4">
+          <button onClick={() => setOpen(true)}>
+            {guests ? (
+              <span>{guests} guests</span>
+            ) : (
+              <span className="text-[#BDBDBD]">Add guests</span>
+            )}
+          </button>
+        </div>
+        <div className="ml-3 flex items-center">
+          <button onClick={() => setOpen(true)}>
+            <AiOutlineSearch className="text-[#EB5757]" size={25} />
+          </button>
+        </div>
+      </div>
       <motion.div
-        initial={{ y: "-100vh" }}
-        animate={open ? { y: 0 } : { y: "-100vh" }}
-        transition={{ duration: 0.5 }}
+        initial={{ y: "-10vh" }}
+        animate={open ? { y: 0 } : { y: "-1000vh" }}
+        transition={{ duration: 0 }}
         style={{
           position: "fixed",
           top: 0,
@@ -63,9 +82,11 @@ const Search = ({ selectedCity, setSelectedCity }) => {
                 <div
                   key={city.city}
                   value={city.city}
-                  onClick={() => handleCitySelect(city.city)}
+                  onClick={() => handleLocationSelect(city.city, city.country)}
                   className={`cursor-pointer ${
-                    location === city.city ? "text-blue-500" : ""
+                    location && location.city === city.city
+                      ? "text-blue-500"
+                      : ""
                   }`}
                 >
                   {city.city}, {city.country}
@@ -82,12 +103,13 @@ const Search = ({ selectedCity, setSelectedCity }) => {
               id="guests"
               value={guests}
               onChange={handleGuestsChange}
+              min="1"
               className="border border-gray-300 rounded-md px-4 py-2 mr-2 focus:outline-none focus:border-blue-500"
             />
           </div>
           <button
             className="bg-blue-500 hover:bg-blue-600 rounded-md px-4 py-2 flex items-center justify-center"
-            onClick={() => handleSearch(location)}
+            onClick={() => handleSearch(location, guests)}
           >
             <span className="text-white text-sm font-medium">Search</span>
           </button>
