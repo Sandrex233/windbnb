@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoLocationSharp } from "react-icons/io5";
-import { FaChevronDown } from "react-icons/fa";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const Search = ({ setSelectedCity, setSelectedGuests }) => {
-  const [locationMenuOpen, setLocationMenuOpen] = useState(false);
-  const [guestsMenuOpen, setGuestsMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [location, setLocation] = useState("");
   const [guests, setGuests] = useState("");
@@ -26,28 +23,17 @@ const Search = ({ setSelectedCity, setSelectedGuests }) => {
     setOpen(false);
   };
 
-  const handleLocationMenuOpen = () => {
-    setLocationMenuOpen(!locationMenuOpen);
-    setGuestsMenuOpen(false);
-  };
-
-  const handleGuestsMenuOpen = () => {
-    setLocationMenuOpen(false);
-    setGuestsMenuOpen(!guestsMenuOpen);
-  };
-
   const cities = [
     { city: "Helsinki", country: "Finland" },
     { city: "Turku", country: "Finland" },
     { city: "Vaasa", country: "Finland" },
     { city: "Oulu", country: "Finland" },
   ];
-  console.log(location);
 
   return (
     <>
-      <div className="border border-[#FFFFFF] rounded-xl px-4 py-3 flex items-center justify-center shadow-custom text-xs sm:text-sm">
-        <div className="border-r border-gray-300 pr-4 flex-grow">
+      <div className="border border-[#FFFFFF] rounded-xl px-2 sm:px-4 py-2 sm:py-3 flex items-center justify-center shadow-custom text-xs sm:text-sm">
+        <div className="border-r border-gray-300 sm:pr-4 pr-2">
           <button onClick={() => setOpen(true)}>
             {location.city ? (
               <>
@@ -59,10 +45,14 @@ const Search = ({ setSelectedCity, setSelectedGuests }) => {
             )}
           </button>
         </div>
-        <div className="border-r border-gray-300 px-4">
+        <div className="border-r border-gray-300 sm:px-4 px-2">
           <button onClick={() => setOpen(true)}>
-            {guests ? (
-              <span>{guests} guests</span>
+            {guests !== "" ? (
+              guests === 1 ? (
+                <span>1 guest</span>
+              ) : (
+                <span>{guests} guests</span>
+              )
             ) : (
               <span className="text-[#BDBDBD]">Add guests</span>
             )}
@@ -88,10 +78,10 @@ const Search = ({ setSelectedCity, setSelectedGuests }) => {
           zIndex: 10,
         }}
       >
-        <div className="w-full h-1/2 flex items-center justify-center bg-white rounded-md shadow-lg p-4">
-          <div className="border border-[#FFFFFF] rounded-xl px-4 py-3 flex items-center justify-center shadow-custom text-xs sm:text-sm">
-            <div className="pr-4 flex-grow" onClick={handleLocationMenuOpen}>
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <div className="w-full h-1/3 sm:h-1/2 flex items-center justify-center bg-white rounded-md shadow-lg p-4">
+          <div className="border border-[#FFFFFF] flex-col sm:flex-row rounded-xl px-4 py-4 flex items-center justify-center shadow-custom text-xs sm:text-sm">
+            <div className="sm:pr-4">
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
                 <InputLabel id="demo-simple-select-standard-label">
                   Location
                 </InputLabel>
@@ -130,7 +120,7 @@ const Search = ({ setSelectedCity, setSelectedGuests }) => {
                 </Select>
               </FormControl>
             </div>
-            <div className="px-4">
+            <div className="sm:px-4">
               <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
                 <InputLabel id="demo-simple-select-autowidth-label">
                   Guests
@@ -153,7 +143,7 @@ const Search = ({ setSelectedCity, setSelectedGuests }) => {
                 </Select>
               </FormControl>
             </div>
-            <div className="ml-3 flex items-center">
+            <div className="sm:ml-3 mt-4 flex items-center">
               <button
                 className="bg-[#EB5757] hover:opacity-80 rounded-md px-4 py-2 flex items-center justify-center"
                 onClick={() => handleSearch(location, guests)}

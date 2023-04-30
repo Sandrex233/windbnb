@@ -4,7 +4,7 @@ import star from "../assets/red-star.svg";
 
 const Listings = ({ selectedGuests, selectedCity }) => {
   return (
-    <div className="pl-[2rem] pr-[2rem] sm:pl-[3rem] sm:pr-[3rem] lg:px-40 min-h-screen">
+    <div className="pl-[1rem] pr-[1rem] sm:pl-[3rem] sm:pr-[3rem] lg:px-40 min-h-screen">
       <div className="flex justify-between items-center py-5 ">
         <h1 className="text-[#333333] text-xl md:text-2xl font-medium">
           Stays in Finland
@@ -20,7 +20,7 @@ const Listings = ({ selectedGuests, selectedCity }) => {
           )
           .map((stay) => (
             <div key={stay.rating} className="flex flex-col mb-6">
-              <div className="mr-4">
+              <div className="sm:mr-4">
                 <img
                   src={stay.photo}
                   alt={stay.title}
@@ -54,7 +54,7 @@ const Listings = ({ selectedGuests, selectedCity }) => {
                       <p className="text-gray-500 text-sm">{stay.rating}</p>
                     </div>
                   </div>
-                  <h2 className="text-sm sm:text-lg md:text-xl font-medium mb-2">
+                  <h2 className="text-sm w-40 sm:w-auto sm:text-lg md:text-xl font-medium mb-2">
                     {stay.title}
                   </h2>
                 </div>
