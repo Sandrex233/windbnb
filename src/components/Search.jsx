@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaChevronDown } from "react-icons/fa";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const Search = ({ setSelectedCity, setSelectedGuests }) => {
   const [locationMenuOpen, setLocationMenuOpen] = useState(false);
@@ -41,13 +42,14 @@ const Search = ({ setSelectedCity, setSelectedGuests }) => {
     { city: "Vaasa", country: "Finland" },
     { city: "Oulu", country: "Finland" },
   ];
+  console.log(location);
 
   return (
     <>
       <div className="border border-[#FFFFFF] rounded-xl px-4 py-3 flex items-center justify-center shadow-custom text-xs sm:text-sm">
         <div className="border-r border-gray-300 pr-4 flex-grow">
           <button onClick={() => setOpen(true)}>
-            {location ? (
+            {location.city ? (
               <>
                 <span>{location.city},</span>
                 <span className="ml-1">{location.country}</span>
@@ -88,77 +90,68 @@ const Search = ({ setSelectedCity, setSelectedGuests }) => {
       >
         <div className="w-full h-1/2 flex items-center justify-center bg-white rounded-md shadow-lg p-4">
           <div className="border border-[#FFFFFF] rounded-xl px-4 py-3 flex items-center justify-center shadow-custom text-xs sm:text-sm">
-            <div className="pr-4 flex-grow">
-              <button
-                onClick={handleLocationMenuOpen}
-                className="flex items-center"
-              >
-                {location ? (
-                  <>
-                    <span>{location.city},</span>
-                    <span className="ml-1">{location.country}</span>
-                  </>
-                ) : (
-                  <span className="text-[#BDBDBD]">Add location</span>
-                )}
-                <FaChevronDown
-                  className={`ml-1 ${
-                    locationMenuOpen ? "transform rotate-180" : ""
-                  }`}
-                />
-              </button>
-              {locationMenuOpen && !guestsMenuOpen && (
-                <div className="border border-gray-300 rounded-md mt-2">
+            <div className="pr-4 flex-grow" onClick={handleLocationMenuOpen}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-standard-label">
+                  Location
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  value={location && location.city ? location.city : ""}
+                  label="Location"
+                  onChange={(e) =>
+                    handleLocationSelect(
+                      e.target.value,
+                      e.target.value ? "Finland" : null
+                    )
+                  }
+                >
                   {cities.map((city) => (
-                    <div
+                    <MenuItem
                       key={city.city}
                       value={city.city}
-                      onClick={() =>
-                        handleLocationSelect(city.city, city.country)
-                      }
                       className={`cursor-pointer flex items-center px-4 py-2 ${
                         location && location.city === city.city
                           ? "bg-gray-200"
                           : ""
                       }`}
                     >
-                      <IoLocationSharp />{" "}
-                      <span>
-                        {city.city}, {city.country}
-                      </span>
-                    </div>
+                      <div className="flex items-center">
+                        <IoLocationSharp className="text-[#4F4F4F]" size={25} />
+                        <span>{city.city},</span>
+                        <span className="ml-1">{city.country}</span>
+                      </div>
+                    </MenuItem>
                   ))}
-                </div>
-              )}
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                </Select>
+              </FormControl>
             </div>
-            <div className=" border-gray-300 px-4">
-              <button
-                onClick={handleGuestsMenuOpen}
-                className="flex items-center"
-              >
-                {guests > 0 ? (
-                  <span>{guests} guests</span>
-                ) : (
-                  <span className="text-[#BDBDBD]">Add guests</span>
-                )}
-                <FaChevronDown
-                  className={`ml-1 ${
-                    guestsMenuOpen ? "transform rotate-180" : ""
-                  }`}
-                />
-              </button>
-              {guestsMenuOpen && !locationMenuOpen && (
-                <div className="mt-2">
-                  <input
-                    type="number"
-                    id="guests"
-                    value={guests}
-                    onChange={handleGuestsChange}
-                    min="1"
-                    className="border border-gray-300 rounded-md px-4 py-2 mr-2 focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-              )}
+            <div className="px-4">
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
+                <InputLabel id="demo-simple-select-autowidth-label">
+                  Guests
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-autowidth-label"
+                  id="demo-simple-select-autowidth"
+                  value={guests}
+                  onChange={handleGuestsChange}
+                  label="Guests"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {Array.from({ length: 10 }, (_, index) => (
+                    <MenuItem key={index + 1} value={index + 1}>
+                      {index + 1}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </div>
             <div className="ml-3 flex items-center">
               <button
